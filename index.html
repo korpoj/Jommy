@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile-Friendly Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #DB5F8E;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.285);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn-option {
+            background-color: #DB5F8E;
+            color: white;
+        }
+
+        .btn-option:active {
+            background-color: #907f85;
+        }
+
+        .btn-restart {
+            background-color: #48975b;
+            color: white;
+        }
+
+        .btn-restart:active {
+            background-color: #b7d3bd;
+        }
+
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>มารู้จักจอมกัน! 🎯</h1>
+        <p class="question" id="question-text"></p>
+        <button class="btn btn-option" onclick="selectAnswer(0)" id="option1"></button>
+        <button class="btn btn-option" onclick="selectAnswer(1)" id="option2"></button>
+        <button class="btn btn-option" onclick="selectAnswer(2)" id="option3"></button>
+        <button class="btn btn-option" onclick="selectAnswer(3)" id="option4"></button>
+        <p id="result"></p>
+        <button class="btn btn-restart" onclick="restartQuiz()" style="display: none;" id="restart-btn">Restart Quiz</button>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "จอมชอบกินอารายที่สุด?", options: ["ผัก", "ขนม", "เนื้อ", "หมาล่า"], answer: 2 },
+            { question: "จอมเกิดจังหวัดอะไร?", options: ["ขอนแก่น", "ร้อยเอ็ด", "กรุงเทพ", "ภูเก็ต"], answer: 1 },
+            { question: "จอมฉนัดทำอะไร?", options: ["เล่นดนตรี", "ร้องเพลง", "วาดรูป", "ภาษา"], answer: 2 },
+            { question: "จอมชอบทำอาราย?", options: ["อ่านหนังสือ", "แต่งเพลง", "ทำอาหาร", "เดิน"], answer: 2 },
+            { question: "กีฬาช่วงนี้ที่จอมเล่น?", options: ["เตะฟุตบอล", "ปั่นจักรยาน", "วิ่ง", "ไตรกีฬา"], answer: 2 },
+            { question: "เครื่องดื่มที่จอมชอบกิน?", options: ["ชาชัก", "กาแฟ", "ชานม", "ไมโล"], answer: 1 },
+            { question: "เมนูที่ชอบสั่งในmac?", options: ["big mac", "ซามูรูไร", "double quarter ponder", "พายสับปรด"], answer: 2 },
+            { question: "มือถือที่จอมใช้?", options: ["Nokia", "Samsung Hero", "Iphone", "Oppo"], answer: 2 },
+            { question: "จอมไม่ชอบกระเพราเพราะอะไร?", options: ["นำ้มันนองจาน", "เผ็ด", "เค็ม", "กลิ่นแรง"], answer: 0 },
+            { question: "จอมน่ารักแค่ไหร?", options: ["กลางๆๆ", "ที่สุดด", "นิดหน่อย", "ไม่เลย"], answer: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestion < questions.length) {
+                document.getElementById("question-text").innerText = questions[currentQuestion].question;
+                document.getElementById("option1").innerText = questions[currentQuestion].options[0];
+                document.getElementById("option2").innerText = questions[currentQuestion].options[1];
+                document.getElementById("option3").innerText = questions[currentQuestion].options[2];
+                document.getElementById("option4").innerText = questions[currentQuestion].options[3];
+            } else {
+                document.getElementById("question-text").innerText = "Quiz Completed!";
+                document.getElementById("result").innerText = `Your Score: ${score} / 10`;
+                document.getElementById("option1").style.display = "none";
+                document.getElementById("option2").style.display = "none";
+                document.getElementById("option3").style.display = "none";
+                document.getElementById("option4").style.display = "none";
+                document.getElementById("restart-btn").style.display = "block";
+            }
+        }
+
+        function selectAnswer(choice) {
+            if (choice === questions[currentQuestion].answer) {
+                score++;
+            }
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("result").innerText = "";
+            document.getElementById("option1").style.display = "block";
+            document.getElementById("option2").style.display = "block";
+            document.getElementById("option3").style.display = "block";
+            document.getElementById("option4").style.display = "block";
+            document.getElementById("restart-btn").style.display = "none";
+            loadQuestion();
+        }
+
+        window.onload = loadQuestion;
+    </script>
+
+</body>
+</html>
